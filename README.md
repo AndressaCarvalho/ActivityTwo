@@ -4,7 +4,7 @@
 
 ## Project description
 Application implemented with [JSONPlaceholder](https://jsonplaceholder.typicode.com/), which aims to return information (posts, albums, to dos, etc.) from a user, developed in Java and Android Studio, for the discipline of Mobile Computing, of the course of Analysis and Development of Systems.<br/>
-Note: This application still aims to implement a database through the [SQLite](https://www.sqlite.org/index.html) library. So far, only repositories have been developed.<br/>
+**Note:** This application still aims to implement a database through the [SQLite](https://www.sqlite.org/index.html) library. So far, only repositories have been developed.<br/>
 <h3 align="center">
     <a href="https://developer.android.com/studio#downloads">🔗 Android Studio</a>
 </h3>
