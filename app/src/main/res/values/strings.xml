@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">ActivityTwo</string>
+    <string name="sign_in_text">Sign in</string>
+    <string name="user_email_text">Username or email</string>
+    <string name="password_text">Password</string>
+    <string name="login_text">LOGIN</string>
+    <string name="forgot_password_text">Forgot password?</string>
+    <string name="sign_in_with_text">Sign in with</string>
+    <string name="create_user_account_text">Create user account</string>
+    <string name="what_do_you_want_to_check_text">What do you want to check?</string>
+    <string name="posts_text">Posts</string>
+    <string name="albums_text">Albums</string>
+    <string name="toDos_text">To dos</string>
+</resources>
