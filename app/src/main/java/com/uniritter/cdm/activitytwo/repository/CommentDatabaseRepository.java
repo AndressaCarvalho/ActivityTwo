@@ -24,8 +24,6 @@ public class CommentDatabaseRepository {
         this.context = context;
         comments = new ArrayList<>();
         databaseHelper = new CommentDatabaseHelper(context);
-        database = databaseHelper.getWritableDatabase();
-        getAllComments();
     }
 
     public static CommentDatabaseRepository getInstance(Context context) {
@@ -36,44 +34,62 @@ public class CommentDatabaseRepository {
     }
 
     public List<ICommentModel> getCommentsByPostId(int postId) {
-        List<ICommentModel> commentsList = new ArrayList<>();
+        String[] columns = { databaseHelper.ID, databaseHelper.POST_ID, databaseHelper.NAME, databaseHelper.EMAIL, databaseHelper.BODY };
+        String[] conditionArgs = { Long.toString(postId) };
+        database = databaseHelper.getReadableDatabase();
+        Cursor cursor = database.query(databaseHelper.TABLE, columns, databaseHelper.POST_ID + " = ?", conditionArgs, null, null, null, null);
 
-        for(ICommentModel c : comments) {
-            if (postId == c.getCommentPostId()) {
-                commentsList.add(c);
-            }
+        if (cursor.moveToFirst()) {
+            do {
+                ICommentModel comment = new CommentModel(
+                        cursor.getInt(1),
+                        cursor.getInt(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5));
+                comments.add(comment);
+            } while (cursor.moveToNext());
         }
 
-        return commentsList;
+        database.close();
+
+        return comments;
     }
 
-    public void getAllComments() {
-        String stm = "SELECT " + databaseHelper.ID + ", " + databaseHelper.POST_ID + ", " + databaseHelper.NAME + ", " + databaseHelper.EMAIL + ", " + databaseHelper.BODY + " FROM " + databaseHelper.TABLE + ";";
-        Cursor cursor = database.rawQuery(stm, null);
-        cursor.moveToFirst();
-        do {
-            ICommentModel comment = new CommentModel(
-                    cursor.getInt(1),
-                    cursor.getInt(2),
-                    cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getString(5));
-            comments.add(comment);
-        } while (cursor.moveToNext());
+    public List<ICommentModel> getAllComments() {
+        String[] columns = { databaseHelper.ID, databaseHelper.POST_ID, databaseHelper.NAME, databaseHelper.EMAIL, databaseHelper.BODY };
+        database = databaseHelper.getReadableDatabase();
+        Cursor cursor = database.query(databaseHelper.TABLE, columns, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                ICommentModel comment = new CommentModel(
+                        cursor.getInt(1),
+                        cursor.getInt(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5));
+                comments.add(comment);
+            } while (cursor.moveToNext());
+        }
+
+        database.close();
+
+        return comments;
     }
 
     public boolean addComment(int commentPostId, String commentName, String commentEmail, String commentBody){
-        ContentValues values;
+        ContentValues values = new ContentValues();
         long result;
 
         database = databaseHelper.getWritableDatabase();
-        values = new ContentValues();
         values.put(databaseHelper.POST_ID, commentPostId);
         values.put(databaseHelper.NAME, commentName);
         values.put(databaseHelper.EMAIL, commentEmail);
         values.put(databaseHelper.BODY, commentBody);
 
         result = database.insert(databaseHelper.TABLE, null, values);
+
         database.close();
 
         if (result == -1)

@@ -12,7 +12,6 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
 
 import com.uniritter.cdm.activitytwo.model.IPostModel;
-import com.uniritter.cdm.activitytwo.model.IUserModel;
 import com.uniritter.cdm.activitytwo.model.PostModel;
 
 import org.json.JSONArray;

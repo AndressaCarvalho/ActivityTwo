@@ -20,6 +20,7 @@ import com.uniritter.cdm.activitytwo.repository.CommentRepository;
 import com.uniritter.cdm.activitytwo.repository.PhotoRepository;
 import com.uniritter.cdm.activitytwo.repository.PostRepository;
 import com.uniritter.cdm.activitytwo.repository.ToDoRepository;
+import com.uniritter.cdm.activitytwo.repository.UserRepository;
 
 public class LoginActivity extends AppCompatActivity implements LoginPresenterContract.View {
     private TextView userNameEmail;
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
 
 
         // Load all data
+        UserRepository.getInstance(this);
         PostRepository.getInstance(this);
         CommentRepository.getInstance(this);
         AlbumRepository.getInstance(this);

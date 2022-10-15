@@ -25,8 +25,6 @@ public class UserDatabaseRepository {
         this.context = context;
         users = new ArrayList<>();
         databaseHelper = new UserDatabaseHelper(context);
-        database = databaseHelper.getWritableDatabase();
-        getAllUsers();
     }
 
     public static UserDatabaseRepository getInstance(Context context) {
@@ -36,57 +34,71 @@ public class UserDatabaseRepository {
         return instance;
     }
 
-    public IUserModel getUserByUsernameOrEmail(String userNameEmail) {
+    public IUserModel getUserByUsernameOrEmail(String userNameEmail, String userPassword) {
         IUserModel user = null;
 
-        for(IUserModel u : users) {
-            if (userNameEmail.equals(u.getUserName()) || userNameEmail.equals(u.getUserEmail())) {
-                user = u;
-            }
+        String[] columns = { databaseHelper.ID, databaseHelper.USER_NAME, databaseHelper.EMAIL, databaseHelper.PASSWORD };
+        String[] conditionArgs = { userNameEmail, userNameEmail, userPassword };
+        database = databaseHelper.getReadableDatabase();
+        Cursor cursor = database.query(databaseHelper.TABLE, columns, "(" + databaseHelper.USER_NAME + " = ? OR " + databaseHelper.EMAIL + " = ?) AND " + databaseHelper.PASSWORD + " = ?", conditionArgs, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                user = new UserModel(
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4));
+            } while (cursor.moveToNext());
         }
+
+        database.close();
+
         return user;
     }
 
-    public void getAllUsers() {
-        String stm = "SELECT " + databaseHelper.ID + ", " + databaseHelper.USER_NAME + ", " + databaseHelper.EMAIL + ", " + databaseHelper.PASSWORD + " FROM " + databaseHelper.TABLE + ";";
-        Cursor cursor = database.rawQuery(stm, null);
-        cursor.moveToFirst();
-        do {
-            IUserModel user = new UserModel(
-                    cursor.getInt(1),
-                    cursor.getString(2),
-                    cursor.getString(3),
-                    cursor.getString(4));
-            users.add(user);
-        } while (cursor.moveToNext());
+    public List<IUserModel> getAllUsers() {
+        String[] columns = { databaseHelper.ID, databaseHelper.USER_NAME, databaseHelper.EMAIL, databaseHelper.PASSWORD };
+        database = databaseHelper.getReadableDatabase();
+        Cursor cursor = database.query(databaseHelper.TABLE, columns, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                IUserModel user = new UserModel(
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4));
+                users.add(user);
+            } while (cursor.moveToNext());
+        }
+
+        database.close();
+
+        return users;
     }
 
     public IUserModel validateCredentials(String userNameEmail, String userPassword) {
         IUserModel user = null;
 
-        if (userNameEmail == null || TextUtils.isEmpty(userNameEmail) || userPassword == null || TextUtils.isEmpty(userPassword)) {
-            return null;
-        } else {
-            user = getUserByUsernameOrEmail(userNameEmail);
-            if (userPassword.equals(user.getUserPassword())) {
-                return user;
-            }
+        if (userNameEmail != null && !TextUtils.isEmpty(userNameEmail) && userPassword != null && !TextUtils.isEmpty(userPassword)) {
+            user = getUserByUsernameOrEmail(userNameEmail, userPassword);
         }
 
-        return null;
+        return user;
     }
 
     public boolean addUser(String userName, String userEmail, String userPassword){
-        ContentValues values;
+        ContentValues values = new ContentValues();
         long result;
 
         database = databaseHelper.getWritableDatabase();
-        values = new ContentValues();
         values.put(databaseHelper.USER_NAME, userName);
         values.put(databaseHelper.EMAIL, userEmail);
         values.put(databaseHelper.PASSWORD, userPassword);
 
         result = database.insert(databaseHelper.TABLE, null, values);
+
         database.close();
 
         if (result == -1)

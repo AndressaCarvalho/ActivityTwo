@@ -24,8 +24,6 @@ public class AlbumDatabaseRepository {
         this.context = context;
         albums = new ArrayList<>();
         databaseHelper = new AlbumDatabaseHelper(context);
-        database = databaseHelper.getWritableDatabase();
-        getAllAlbums();
     }
 
     public static AlbumDatabaseRepository getInstance(Context context) {
@@ -36,39 +34,56 @@ public class AlbumDatabaseRepository {
     }
 
     public List<IAlbumModel> getAlbumsByUserId(int userId) {
-        List<IAlbumModel> albumsList = new ArrayList<>();
+        String[] columns = { databaseHelper.ID, databaseHelper.USER_ID, databaseHelper.TITLE };
+        String[] conditionArgs = { Long.toString(userId) };
+        database = databaseHelper.getReadableDatabase();
+        Cursor cursor = database.query(databaseHelper.TABLE, columns, databaseHelper.USER_ID + " = ?", conditionArgs, null, null, null, null);
 
-        for(IAlbumModel a : albums) {
-            if (userId == a.getAlbumUserId()) {
-                albumsList.add(a);
-            }
+        if (cursor.moveToFirst()) {
+            do {
+                IAlbumModel album = new AlbumModel(
+                        cursor.getInt(1),
+                        cursor.getInt(2),
+                        cursor.getString(3));
+                albums.add(album);
+            } while (cursor.moveToNext());
         }
-        return albumsList;
+
+        database.close();
+
+        return albums;
     }
 
-    public void getAllAlbums() {
-        String stm = "SELECT " + databaseHelper.ID + ", " + databaseHelper.USER_ID + ", " + databaseHelper.TITLE + " FROM " + databaseHelper.TABLE + ";";
-        Cursor cursor = database.rawQuery(stm, null);
-        cursor.moveToFirst();
-        do {
-            IAlbumModel album = new AlbumModel(
-                    cursor.getInt(1),
-                    cursor.getInt(2),
-                    cursor.getString(3));
-            albums.add(album);
-        } while (cursor.moveToNext());
+    public List<IAlbumModel> getAllAlbums() {
+        String[] columns = { databaseHelper.ID, databaseHelper.USER_ID, databaseHelper.TITLE };
+        database = databaseHelper.getReadableDatabase();
+        Cursor cursor = database.query(databaseHelper.TABLE, columns, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                IAlbumModel album = new AlbumModel(
+                        cursor.getInt(1),
+                        cursor.getInt(2),
+                        cursor.getString(3));
+                albums.add(album);
+            } while (cursor.moveToNext());
+        }
+
+        database.close();
+
+        return albums;
     }
 
     public boolean addAlbum(int albumUserId, String albumTitle){
-        ContentValues values;
+        ContentValues values = new ContentValues();
         long result;
 
         database = databaseHelper.getWritableDatabase();
-        values = new ContentValues();
         values.put(databaseHelper.USER_ID, albumUserId);
         values.put(databaseHelper.TITLE, albumTitle);
 
         result = database.insert(databaseHelper.TABLE, null, values);
+
         database.close();
 
         if (result == -1)

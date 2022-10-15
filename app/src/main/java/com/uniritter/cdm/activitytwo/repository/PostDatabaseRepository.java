@@ -24,8 +24,6 @@ public class PostDatabaseRepository {
         this.context = context;
         posts = new ArrayList<>();
         databaseHelper = new PostDatabaseHelper(context);
-        database = databaseHelper.getWritableDatabase();
-        getAllPosts();
     }
 
     public static PostDatabaseRepository getInstance(Context context) {
@@ -36,42 +34,59 @@ public class PostDatabaseRepository {
     }
 
     public List<IPostModel> getPostsByUserId(int userId) {
-        List<IPostModel> postsList = new ArrayList<>();
+        String[] columns = { databaseHelper.ID, databaseHelper.USER_ID, databaseHelper.TITLE, databaseHelper.BODY };
+        String[] conditionArgs = { Long.toString(userId) };
+        database = databaseHelper.getReadableDatabase();
+        Cursor cursor = database.query(databaseHelper.TABLE, columns, databaseHelper.USER_ID + " = ?", conditionArgs, null, null, null, null);
 
-        for(IPostModel p : posts) {
-            if (userId == p.getPostUserId()) {
-                postsList.add(p);
-            }
+        if (cursor.moveToFirst()) {
+            do {
+                IPostModel post = new PostModel(
+                        cursor.getInt(1),
+                        cursor.getInt(2),
+                        cursor.getString(3),
+                        cursor.getString(4));
+                posts.add(post);
+            } while (cursor.moveToNext());
         }
 
-        return postsList;
+        database.close();
+
+        return posts;
     }
 
-    public void getAllPosts() {
-        String stm = "SELECT " + databaseHelper.ID + ", " + databaseHelper.USER_ID + ", " + databaseHelper.TITLE + ", " + databaseHelper.BODY + " FROM " + databaseHelper.TABLE + ";";
-        Cursor cursor = database.rawQuery(stm, null);
-        cursor.moveToFirst();
-        do {
-            IPostModel post = new PostModel(
-                    cursor.getInt(1),
-                    cursor.getInt(2),
-                    cursor.getString(3),
-                    cursor.getString(4));
-            posts.add(post);
-        } while (cursor.moveToNext());
+    public List<IPostModel> getAllPosts() {
+        String[] columns = { databaseHelper.ID, databaseHelper.USER_ID, databaseHelper.TITLE, databaseHelper.BODY };
+        database = databaseHelper.getReadableDatabase();
+        Cursor cursor = database.query(databaseHelper.TABLE, columns, null, null, null, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                IPostModel post = new PostModel(
+                        cursor.getInt(1),
+                        cursor.getInt(2),
+                        cursor.getString(3),
+                        cursor.getString(4));
+                posts.add(post);
+            } while (cursor.moveToNext());
+        }
+
+        database.close();
+
+        return posts;
     }
 
     public boolean addPost(int postUserId, String postTitle, String postBody){
-        ContentValues values;
+        ContentValues values = new ContentValues();;
         long result;
 
         database = databaseHelper.getWritableDatabase();
-        values = new ContentValues();
         values.put(databaseHelper.USER_ID, postUserId);
         values.put(databaseHelper.TITLE, postTitle);
         values.put(databaseHelper.BODY, postBody);
 
         result = database.insert(databaseHelper.TABLE, null, values);
+
         database.close();
 
         if (result == -1)

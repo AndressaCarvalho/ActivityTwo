@@ -49,10 +49,6 @@ public class UserRepository implements Listener<JSONArray>, Response.ErrorListen
         return instance;
     }
 
-    public List<IUserModel> getAllUsers() {
-        return users;
-    }
-
     public IUserModel getUserByUsernameOrEmail(String userNameEmail) {
         IUserModel user = null;
 
@@ -64,19 +60,22 @@ public class UserRepository implements Listener<JSONArray>, Response.ErrorListen
         return user;
     }
 
+    public List<IUserModel> getAllUsers() {
+        return users;
+    }
+
     public IUserModel validateCredentials(String userNameEmail, String userPassword) {
         IUserModel user = null;
 
-        if (userNameEmail == null || TextUtils.isEmpty(userNameEmail) || userPassword == null || TextUtils.isEmpty(userPassword)) {
-            return null;
-        } else {
-            user = getUserByUsernameOrEmail(userNameEmail);
-            if (userPassword.equals(user.getUserPassword())) {
-                return user;
+        if (userNameEmail != null && !TextUtils.isEmpty(userNameEmail) && userPassword != null && !TextUtils.isEmpty(userPassword)) {
+            IUserModel u = getUserByUsernameOrEmail(userNameEmail);
+
+            if (userPassword.equals(u.getUserPassword())) {
+                user = u;
             }
         }
 
-        return null;
+        return user;
     }
 
     @Override
