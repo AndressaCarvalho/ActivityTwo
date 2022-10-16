@@ -23,7 +23,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_list_details, parent,false);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_item_list_details_1, parent,false);
         return new CommentViewHolder(layoutView);
     }
 

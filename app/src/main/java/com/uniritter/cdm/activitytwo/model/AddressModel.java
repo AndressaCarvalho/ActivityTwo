@@ -20,6 +20,7 @@ public class AddressModel implements Parcelable {
         zipCode = in.readString();
         street = in.readString();
         suite = in.readString();
+        geo = in.readParcelable(GeoModel.class.getClassLoader());
     }
 
     public static final Creator<AddressModel> CREATOR = new Creator<AddressModel>() {
@@ -76,5 +77,6 @@ public class AddressModel implements Parcelable {
         parcel.writeString(zipCode);
         parcel.writeString(street);
         parcel.writeString(suite);
+        parcel.writeParcelable(geo, i);
     }
 }

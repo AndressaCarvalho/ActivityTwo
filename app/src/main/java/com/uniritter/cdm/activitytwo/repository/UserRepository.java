@@ -50,6 +50,17 @@ public class UserRepository implements Listener<JSONArray>, Response.ErrorListen
         return instance;
     }
 
+    public IUserModel getUserById(int userId) {
+        for(IUserModel u : this.users) {
+            if (u.getUserId() == userId) {
+                this.user = u;
+                break;
+            }
+        }
+
+        return this.user;
+    }
+
     public IUserModel getUserByUsernameOrEmail(String userNameEmail) {
         for(IUserModel u : this.users) {
             if (userNameEmail.equals(u.getUserName()) || userNameEmail.equals(u.getUserEmail())) {

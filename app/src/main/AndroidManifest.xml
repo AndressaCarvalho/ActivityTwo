@@ -16,6 +16,12 @@
         android:theme="@style/Theme.ActivityTwo"
         tools:targetApi="31">
         <activity
+            android:name=".view.UserDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.UserActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.AlbumDetailsActivity"
             android:exported="false" />
         <activity

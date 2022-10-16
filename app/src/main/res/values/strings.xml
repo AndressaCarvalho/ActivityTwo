@@ -8,6 +8,8 @@
     <string name="sign_in_with_text">Sign in with</string>
     <string name="create_user_account_text">Create user account</string>
     <string name="what_do_you_want_to_check_text">What do you want to check?</string>
+    <string name="profile_text">Profile</string>
+    <string name="users_text">Users</string>
     <string name="posts_text">Posts</string>
     <string name="albums_text">Albums</string>
     <string name="toDos_text">To dos</string>

@@ -5,11 +5,16 @@ import android.app.Activity;
 import com.uniritter.cdm.activitytwo.model.IAlbumModel;
 import com.uniritter.cdm.activitytwo.model.IPostModel;
 import com.uniritter.cdm.activitytwo.model.IToDoModel;
+import com.uniritter.cdm.activitytwo.model.IUserModel;
 
 import java.util.List;
 
 public class HomePresenterContract {
     public interface View {
+        void onUserResult(IUserModel user);
+
+        void onUsersResult(List<IUserModel> users);
+
         void onPostsResult(List<IPostModel> posts);
 
         void onAlbumsResult(List<IAlbumModel> albums);
@@ -20,6 +25,10 @@ public class HomePresenterContract {
     }
 
     public interface Presenter {
+        void getUser(int userId);
+
+        void getUsers();
+
         void getPosts(int userId);
 
         void getAlbums(int userId);

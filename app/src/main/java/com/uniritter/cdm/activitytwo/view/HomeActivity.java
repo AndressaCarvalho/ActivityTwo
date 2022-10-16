@@ -13,11 +13,13 @@ import com.uniritter.cdm.activitytwo.R;
 import com.uniritter.cdm.activitytwo.model.IAlbumModel;
 import com.uniritter.cdm.activitytwo.model.IPostModel;
 import com.uniritter.cdm.activitytwo.model.IToDoModel;
+import com.uniritter.cdm.activitytwo.model.IUserModel;
 import com.uniritter.cdm.activitytwo.model.UserModel;
 import com.uniritter.cdm.activitytwo.presenter.HomePresenter;
 import com.uniritter.cdm.activitytwo.presenter.HomePresenterContract;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity implements HomePresenterContract.View {
@@ -38,6 +40,14 @@ public class HomeActivity extends AppCompatActivity implements HomePresenterCont
 
         this.homePresenter = new HomePresenter(this);
 
+        findViewById(R.id.profile).setOnClickListener(view -> {
+            this.homePresenter.getUser(user.getUserId());
+        });
+
+        findViewById(R.id.users).setOnClickListener(view -> {
+            this.homePresenter.getUsers();
+        });
+
         findViewById(R.id.posts).setOnClickListener(view -> {
             this.homePresenter.getPosts(user.getUserId());
         });
@@ -49,6 +59,32 @@ public class HomeActivity extends AppCompatActivity implements HomePresenterCont
         findViewById(R.id.toDos).setOnClickListener(view -> {
             this.homePresenter.getToDos(user.getUserId());
         });
+    }
+
+    @Override
+    public void onUserResult(IUserModel user) {
+        if (user != null) {
+            List<IUserModel> listUser = Collections.singletonList(user);
+
+            Intent intent = new Intent(HomeActivity.this, UserDetailsActivity.class);
+            intent.putExtra("userData", (Serializable) listUser);
+            startActivity(intent);
+        }
+        else {
+            Toast.makeText(HomeActivity.this, "No user found!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void onUsersResult(List<IUserModel> users) {
+        if (users != null) {
+            Intent intent = new Intent(HomeActivity.this, UserActivity.class);
+            intent.putExtra("userList", (Serializable) users);
+            startActivity(intent);
+        }
+        else {
+            Toast.makeText(HomeActivity.this, "No user found!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
