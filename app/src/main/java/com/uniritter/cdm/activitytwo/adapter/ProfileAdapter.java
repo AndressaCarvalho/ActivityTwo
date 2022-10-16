@@ -34,11 +34,11 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         IUserModel objUser = this.data.get(position);
 
+
+        ((TextView)((ProfileViewHolder) holder).itemView.findViewById(R.id.itemOneTitle)).setText("General");
+
         ((TextView)((ProfileViewHolder) holder).itemView.findViewById(R.id.itemOne)).setText(
-                "General"
-                + System.getProperty("line.separator")
-                + System.getProperty("line.separator")
-                + "Username: " + objUser.getUserName()
+                "Username: " + objUser.getUserName()
                 + System.getProperty("line.separator")
                 + "Email: " + objUser.getUserEmail()
                 + System.getProperty("line.separator")
@@ -47,20 +47,18 @@ public class ProfileAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 + "Website: " + objUser.getUserWebsite()
         );
 
+        ((TextView)((ProfileViewHolder) holder).itemView.findViewById(R.id.itemTwoTitle)).setText("Company");
+
         ((TextView)((ProfileViewHolder) holder).itemView.findViewById(R.id.itemTwo)).setText(
-                "Company"
-                + System.getProperty("line.separator")
-                + System.getProperty("line.separator")
-                + "Name: " + objUser.getUserCompany().getName() + ": " + objUser.getUserCompany().getCatchPhrase()
+                "Name: " + objUser.getUserCompany().getName() + " - " + objUser.getUserCompany().getCatchPhrase()
                 + System.getProperty("line.separator")
                 + "BS: " + objUser.getUserCompany().getBs()
         );
 
+        ((TextView)((ProfileViewHolder) holder).itemView.findViewById(R.id.itemThreeTitle)).setText("Address");
+
         ((TextView)((ProfileViewHolder) holder).itemView.findViewById(R.id.itemThree)).setText(
-                "Address"
-                + System.getProperty("line.separator")
-                + System.getProperty("line.separator")
-                + "Zip code: " + objUser.getUserAddress().getZipCode()
+                "Zip code: " + objUser.getUserAddress().getZipCode()
                 + System.getProperty("line.separator")
                 + "Street: " + objUser.getUserAddress().getStreet()
                 + System.getProperty("line.separator")
