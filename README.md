@@ -40,6 +40,7 @@ Application implemented with [JSONPlaceholder](https://jsonplaceholder.typicode.
 
 ## Features
 - [x] User login
+- [x] User listing
 - [x] User post listing
 - [x] Listing of comments on posts
 - [x] User album listing
@@ -51,6 +52,18 @@ Application implemented with [JSONPlaceholder](https://jsonplaceholder.typicode.
 - [ ] New album creation
 - [ ] Adding images to albums
 - [ ] Creation of a new to do
+- [ ] User update
+- [ ] User post update
+- [ ] Update comments on posts
+- [ ] User album update
+- [ ] Update images in albums
+- [ ] To do update
+- [ ] User delete
+- [ ] User post delete
+- [ ] Delete comments on posts
+- [ ] User album delete
+- [ ] Delete images in albums
+- [ ] To do delete
 ---
 
 ## Application demo
