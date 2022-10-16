@@ -13,6 +13,6 @@ public class PostPresenter implements PostPresenterContract.Presenter {
 
     @Override
     public void getPosts(int userId) {
-        postView.onPostsResult(repository.getPostsByUserId(userId));
+        this.postView.onPostsResult(this.repository.getPostsByUserId(userId));
     }
 }

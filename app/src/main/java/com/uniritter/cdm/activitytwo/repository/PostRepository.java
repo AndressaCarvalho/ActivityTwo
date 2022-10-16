@@ -29,7 +29,7 @@ public class PostRepository implements Listener<JSONArray>, Response.ErrorListen
     private PostRepository(Context context) {
         super();
         this.context = context;
-        posts = new ArrayList<>();
+        this.posts = new ArrayList<>();
 
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonArrayRequest jaRequest = new JsonArrayRequest(Request.Method.GET,
@@ -48,7 +48,7 @@ public class PostRepository implements Listener<JSONArray>, Response.ErrorListen
     public List<IPostModel> getPostsByUserId(int userId) {
         List<IPostModel> postsList = new ArrayList<>();
 
-        for(IPostModel p : posts) {
+        for(IPostModel p : this.posts) {
             if (userId == p.getPostUserId()) {
                 postsList.add(p);
             }
@@ -58,7 +58,7 @@ public class PostRepository implements Listener<JSONArray>, Response.ErrorListen
     }
 
     public List<IPostModel> getAllPosts() {
-        return posts;
+        return this.posts;
     }
 
     @Override
@@ -66,7 +66,7 @@ public class PostRepository implements Listener<JSONArray>, Response.ErrorListen
         for (int i = 0; i < response.length(); i++) {
             try {
                 JSONObject json = response.getJSONObject(i);
-                posts.add(new PostModel(
+                this.posts.add(new PostModel(
                         json.getInt("id"),
                         json.getInt("userId"),
                         json.getString("title"),

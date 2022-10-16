@@ -29,7 +29,7 @@ public class PhotoRepository implements Listener<JSONArray>, Response.ErrorListe
     private PhotoRepository(Context context) {
         super();
         this.context = context;
-        photos = new ArrayList<>();
+        this.photos = new ArrayList<>();
 
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonArrayRequest jaRequest = new JsonArrayRequest(Request.Method.GET,
@@ -48,7 +48,7 @@ public class PhotoRepository implements Listener<JSONArray>, Response.ErrorListe
     public List<IPhotoModel> getPhotosByAlbumId(int albumId) {
         List<IPhotoModel> photosList = new ArrayList<>();
 
-        for(IPhotoModel p : photos) {
+        for(IPhotoModel p : this.photos) {
             if (albumId == p.getPhotoAlbumId()) {
                 photosList.add(p);
             }
@@ -57,7 +57,7 @@ public class PhotoRepository implements Listener<JSONArray>, Response.ErrorListe
     }
 
     public List<IPhotoModel> getAllPhotos() {
-        return photos;
+        return this.photos;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class PhotoRepository implements Listener<JSONArray>, Response.ErrorListe
         for (int i = 0; i < response.length(); i++) {
             try {
                 JSONObject json = response.getJSONObject(i);
-                photos.add(new PhotoModel(
+                this.photos.add(new PhotoModel(
                         json.getInt("id"),
                         json.getInt("albumId"),
                         json.getString("title"),

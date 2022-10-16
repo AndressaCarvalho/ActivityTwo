@@ -32,8 +32,8 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        userNameEmail = findViewById(R.id.userNameEmail);
-        userPassword = findViewById(R.id.userPassword);
+        this.userNameEmail = findViewById(R.id.userNameEmail);
+        this.userPassword = findViewById(R.id.userPassword);
 
 
         // Load all data
@@ -45,23 +45,23 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
         ToDoRepository.getInstance(this);
 
 
-        loginPresenter = new LoginPresenter(this);
+        this.loginPresenter = new LoginPresenter(this);
 
         findViewById(R.id.logIn).setOnClickListener(view -> {
-            checkLoginCredentials(userNameEmail.getText().toString(), userNameEmail.getText().toString());
-
-            onLoginCall(userNameEmail.getText().toString(), userPassword.getText().toString());
+            onLoginCall(this.userNameEmail.getText().toString(), this.userPassword.getText().toString());
         });
     }
 
     @Override
     public void onLoginCall(String userNameEmail, String userPassword) {
-        loginPresenter.doLogin(userNameEmail, userPassword);
+        this.loginPresenter.doLogin(userNameEmail, userPassword);
     }
 
     @Override
     public void onLoginResult(IUserModel user) {
         if (user != null) {
+            this.checkLoginCredentials(user.getUserId(), user.getUserName(), user.getUserEmail(), user.getUserPassword());
+
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             intent.putExtra("userObject", (Parcelable) user);
             startActivity(intent);
@@ -71,14 +71,18 @@ public class LoginActivity extends AppCompatActivity implements LoginPresenterCo
         }
     }
 
-    private void checkLoginCredentials(String nameEmail, String password) {
+    private void checkLoginCredentials(int id, String name, String email, String password) {
         SharedPreferences sharedPreferences = getSharedPreferences("loginCredentials", MODE_PRIVATE);
 
-        if (nameEmail != null && !TextUtils.isEmpty(nameEmail)
+        if (id != 0
+                && name != null && !TextUtils.isEmpty(name)
+                && email != null && !TextUtils.isEmpty(email)
                 && password != null && !TextUtils.isEmpty(password)) {
             SharedPreferences.Editor edit = sharedPreferences.edit();
 
-            edit.putString("userNameEmail", nameEmail);
+            edit.putInt("userId", id);
+            edit.putString("userName", name);
+            edit.putString("userEmail", email);
             edit.putString("userPassword", password);
 
             edit.apply();

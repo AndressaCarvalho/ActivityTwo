@@ -13,6 +13,6 @@ public class CommentPresenter implements CommentPresenterContract.Presenter {
 
     @Override
     public void getComments(int postId) {
-        commentView.onCommentsResult(repository.getCommentsByPostId(postId));
+        this.commentView.onCommentsResult(this.repository.getCommentsByPostId(postId));
     }
 }

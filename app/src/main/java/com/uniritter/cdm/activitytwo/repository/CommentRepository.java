@@ -29,7 +29,7 @@ public class CommentRepository implements Listener<JSONArray>, Response.ErrorLis
     private CommentRepository(Context context) {
         super();
         this.context = context;
-        comments = new ArrayList<>();
+        this.comments = new ArrayList<>();
 
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonArrayRequest jaRequest = new JsonArrayRequest(Request.Method.GET,
@@ -46,13 +46,13 @@ public class CommentRepository implements Listener<JSONArray>, Response.ErrorLis
     }
 
     public List<ICommentModel> getAllComments() {
-        return comments;
+        return this.comments;
     }
 
     public List<ICommentModel> getCommentsByPostId(int postId) {
         List<ICommentModel> commentsList = new ArrayList<>();
 
-        for(ICommentModel c : comments) {
+        for(ICommentModel c : this.comments) {
             if (postId == c.getCommentPostId()) {
                 commentsList.add(c);
             }
@@ -66,7 +66,7 @@ public class CommentRepository implements Listener<JSONArray>, Response.ErrorLis
         for (int i = 0; i < response.length(); i++) {
             try {
                 JSONObject json = response.getJSONObject(i);
-                comments.add(new CommentModel(
+                this.comments.add(new CommentModel(
                         json.getInt("id"),
                         json.getInt("postId"),
                         json.getString("name"),

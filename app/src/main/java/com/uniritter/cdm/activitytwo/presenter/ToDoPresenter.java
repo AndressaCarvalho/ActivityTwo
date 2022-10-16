@@ -13,6 +13,6 @@ public class ToDoPresenter implements ToDoPresenterContract.Presenter {
 
     @Override
     public void getToDos(int userId) {
-        toDoView.onToDosResult(repository.getToDosByUserId(userId));
+        this.toDoView.onToDosResult(this.repository.getToDosByUserId(userId));
     }
 }

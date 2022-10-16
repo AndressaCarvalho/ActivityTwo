@@ -30,8 +30,8 @@ public class AlbumDetailsActivity extends AppCompatActivity implements PhotoPres
         TextView albumTitle = findViewById(R.id.albumTitle);
         albumTitle.setText(album.getAlbumTitle());
 
-        photoPresenter = new PhotoPresenter(this);
-        photoPresenter.getPhotos(album.getAlbumId());
+        this.photoPresenter = new PhotoPresenter(this);
+        this.photoPresenter.getPhotos(album.getAlbumId());
     }
 
     @Override

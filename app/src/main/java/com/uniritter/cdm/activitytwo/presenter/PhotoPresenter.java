@@ -13,6 +13,6 @@ public class PhotoPresenter implements PhotoPresenterContract.Presenter {
 
     @Override
     public void getPhotos(int albumId) {
-        photoView.onPhotosResult(repository.getPhotosByAlbumId(albumId));
+        this.photoView.onPhotosResult(this.repository.getPhotosByAlbumId(albumId));
     }
 }

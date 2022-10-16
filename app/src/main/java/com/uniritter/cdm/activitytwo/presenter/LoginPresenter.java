@@ -13,6 +13,6 @@ public class LoginPresenter implements LoginPresenterContract.Presenter {
 
     @Override
     public void doLogin(String userNameEmail, String userPassword) {
-        loginView.onLoginResult(repository.validateCredentials(userNameEmail, userPassword));
+        this.loginView.onLoginResult(this.repository.validateCredentials(userNameEmail, userPassword));
     }
 }

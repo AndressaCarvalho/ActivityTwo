@@ -32,7 +32,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        IPostModel objPost = data.get(position);
+        IPostModel objPost = this.data.get(position);
 
         ((TextView)((PostViewHolder) holder).itemView.findViewById(R.id.item)).setText("Title: " + objPost.getPostTitle());
 
@@ -45,7 +45,7 @@ public class PostAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return this.data.size();
     }
 }
 
@@ -54,6 +54,6 @@ class PostViewHolder extends RecyclerView.ViewHolder {
 
     public PostViewHolder(@NonNull View itemView) {
         super(itemView);
-        view = itemView;
+        this.view = itemView;
     }
 }

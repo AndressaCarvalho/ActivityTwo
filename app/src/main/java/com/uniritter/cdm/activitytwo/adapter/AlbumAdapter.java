@@ -32,7 +32,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        IAlbumModel objAlbum = data.get(position);
+        IAlbumModel objAlbum = this.data.get(position);
 
         ((TextView)((AlbumViewHolder) holder).itemView.findViewById(R.id.item)).setText("Title: " + objAlbum.getAlbumTitle());
 
@@ -45,7 +45,7 @@ public class AlbumAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return this.data.size();
     }
 }
 
@@ -54,6 +54,6 @@ class AlbumViewHolder extends RecyclerView.ViewHolder {
 
     public AlbumViewHolder(@NonNull View itemView) {
         super(itemView);
-        view = itemView;
+        this.view = itemView;
     }
 }

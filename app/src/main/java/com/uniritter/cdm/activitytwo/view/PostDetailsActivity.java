@@ -33,8 +33,8 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentPre
         TextView postBody = findViewById(R.id.postBody);
         postBody.setText(post.getPostBody());
 
-        commentPresenter = new CommentPresenter(this);
-        commentPresenter.getComments(post.getPostId());
+        this.commentPresenter = new CommentPresenter(this);
+        this.commentPresenter.getComments(post.getPostId());
     }
 
     @Override

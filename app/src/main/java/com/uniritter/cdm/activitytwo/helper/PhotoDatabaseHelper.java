@@ -20,13 +20,13 @@ public class PhotoDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String stm = "CREATE TABLE " + TABLE + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + ALBUM_ID + " INTEGER, " + TITLE + " TEXT, " + URL + " TEXT, " + THUMBNAIL_URL + " TEXT, FOREIGN KEY(" + ALBUM_ID + ") REFERENCES albums(" + ID + "));";
+        String stm = "CREATE TABLE " + this.TABLE + " (" + this.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + this.ALBUM_ID + " INTEGER, " + this.TITLE + " TEXT, " + this.URL + " TEXT, " + this.THUMBNAIL_URL + " TEXT, FOREIGN KEY(" + this.ALBUM_ID + ") REFERENCES albums(" + this.ID + "));";
         sqLiteDatabase.execSQL(stm);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + this.TABLE);
         onCreate(sqLiteDatabase);
     }
 }

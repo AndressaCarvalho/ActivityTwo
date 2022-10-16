@@ -29,7 +29,7 @@ public class AlbumRepository implements Listener<JSONArray>, Response.ErrorListe
     private AlbumRepository(Context context) {
         super();
         this.context = context;
-        albums = new ArrayList<>();
+        this.albums = new ArrayList<>();
 
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonArrayRequest jaRequest = new JsonArrayRequest(Request.Method.GET,
@@ -48,7 +48,7 @@ public class AlbumRepository implements Listener<JSONArray>, Response.ErrorListe
     public List<IAlbumModel> getAlbumsByUserId(int userId) {
         List<IAlbumModel> albumsList = new ArrayList<>();
 
-        for(IAlbumModel a : albums) {
+        for(IAlbumModel a : this.albums) {
             if (userId == a.getAlbumUserId()) {
                 albumsList.add(a);
             }
@@ -57,7 +57,7 @@ public class AlbumRepository implements Listener<JSONArray>, Response.ErrorListe
     }
 
     public List<IAlbumModel> getAllAlbums() {
-        return albums;
+        return this.albums;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class AlbumRepository implements Listener<JSONArray>, Response.ErrorListe
         for (int i = 0; i < response.length(); i++) {
             try {
                 JSONObject json = response.getJSONObject(i);
-                albums.add(new AlbumModel(
+                this.albums.add(new AlbumModel(
                         json.getInt("id"),
                         json.getInt("userId"),
                         json.getString("title")));

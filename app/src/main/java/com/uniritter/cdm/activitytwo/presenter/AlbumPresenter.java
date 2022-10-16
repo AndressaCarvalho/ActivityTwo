@@ -13,6 +13,6 @@ public class AlbumPresenter implements AlbumPresenterContract.Presenter {
 
     @Override
     public void getAlbums(int userId) {
-        albumView.onAlbumsResult(repository.getAlbumsByUserId(userId));
+        this.albumView.onAlbumsResult(this.repository.getAlbumsByUserId(userId));
     }
 }

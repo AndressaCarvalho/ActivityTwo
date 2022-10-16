@@ -29,25 +29,25 @@ public class HomeActivity extends AppCompatActivity implements HomePresenterCont
         setContentView(R.layout.activity_home);
 
         SharedPreferences sharedPreferences = getSharedPreferences("loginCredentials", MODE_PRIVATE);
-        String userNameEmail = sharedPreferences.getString("userNameEmail", "");
+        String userNameEmail = sharedPreferences.getString("userName", "");
 
         UserModel user = getIntent().getParcelableExtra("userObject");
 
         TextView welcome = findViewById(R.id.welcome);
         welcome.setText("Welcome " + userNameEmail + "!");
 
-        homePresenter = new HomePresenter(this);
+        this.homePresenter = new HomePresenter(this);
 
         findViewById(R.id.posts).setOnClickListener(view -> {
-            homePresenter.getPosts(user.getUserId());
+            this.homePresenter.getPosts(user.getUserId());
         });
 
         findViewById(R.id.albums).setOnClickListener(view -> {
-            homePresenter.getAlbums(user.getUserId());
+            this.homePresenter.getAlbums(user.getUserId());
         });
 
         findViewById(R.id.toDos).setOnClickListener(view -> {
-            homePresenter.getToDos(user.getUserId());
+            this.homePresenter.getToDos(user.getUserId());
         });
     }
 

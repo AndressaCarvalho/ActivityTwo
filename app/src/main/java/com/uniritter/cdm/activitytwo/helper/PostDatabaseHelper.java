@@ -19,13 +19,13 @@ public class PostDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String stm = "CREATE TABLE " + TABLE + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + USER_ID + " INTEGER, " + TITLE + " TEXT, " + BODY + " TEXT, FOREIGN KEY(" + USER_ID + ") REFERENCES users(" + ID + "));";
+        String stm = "CREATE TABLE " + this.TABLE + " (" + this.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + this.USER_ID + " INTEGER, " + this.TITLE + " TEXT, " + this.BODY + " TEXT, FOREIGN KEY(" + this.USER_ID + ") REFERENCES users(" + this.ID + "));";
         sqLiteDatabase.execSQL(stm);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + this.TABLE);
         onCreate(sqLiteDatabase);
     }
 }

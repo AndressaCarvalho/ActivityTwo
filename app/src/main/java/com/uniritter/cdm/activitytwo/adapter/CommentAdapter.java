@@ -29,7 +29,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ICommentModel objComment = data.get(position);
+        ICommentModel objComment = this.data.get(position);
 
         ((TextView)((CommentViewHolder) holder).itemView.findViewById(R.id.item)).setText("Title: " + objComment.getCommentName()
                 + System.getProperty("line.separator")
@@ -42,7 +42,7 @@ public class CommentAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return this.data.size();
     }
 }
 
@@ -51,6 +51,6 @@ class CommentViewHolder extends RecyclerView.ViewHolder {
 
     public CommentViewHolder(@NonNull View itemView) {
         super(itemView);
-        view = itemView;
+        this.view = itemView;
     }
 }

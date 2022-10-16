@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserRepository implements Listener<JSONArray>, Response.ErrorListener {
+    private IUserModel user;
     private List<IUserModel> users;
     private Context context;
     private static UserRepository instance;
@@ -33,7 +34,7 @@ public class UserRepository implements Listener<JSONArray>, Response.ErrorListen
     private UserRepository(Context context) {
         super();
         this.context = context;
-        users = new ArrayList<>();
+        this.users = new ArrayList<>();
 
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonArrayRequest jaRequest = new JsonArrayRequest(Request.Method.GET,
@@ -50,32 +51,32 @@ public class UserRepository implements Listener<JSONArray>, Response.ErrorListen
     }
 
     public IUserModel getUserByUsernameOrEmail(String userNameEmail) {
-        IUserModel user = null;
-
-        for(IUserModel u : users) {
+        for(IUserModel u : this.users) {
             if (userNameEmail.equals(u.getUserName()) || userNameEmail.equals(u.getUserEmail())) {
-                user = u;
+                this.user = u;
+                break;
             }
         }
-        return user;
+
+        return this.user;
     }
 
     public List<IUserModel> getAllUsers() {
-        return users;
+        return this.users;
     }
 
     public IUserModel validateCredentials(String userNameEmail, String userPassword) {
-        IUserModel user = null;
+        IUserModel u = null;
 
         if (userNameEmail != null && !TextUtils.isEmpty(userNameEmail) && userPassword != null && !TextUtils.isEmpty(userPassword)) {
-            IUserModel u = getUserByUsernameOrEmail(userNameEmail);
+            this.getUserByUsernameOrEmail(userNameEmail);
 
-            if (userPassword.equals(u.getUserPassword())) {
-                user = u;
+            if (userPassword.equals(this.user.getUserPassword())) {
+                u = this.user;
             }
         }
 
-        return user;
+        return u;
     }
 
     @Override
@@ -83,7 +84,7 @@ public class UserRepository implements Listener<JSONArray>, Response.ErrorListen
         for (int i = 0; i < response.length(); i++) {
             try {
                 JSONObject json = response.getJSONObject(i);
-                users.add(new UserModel(
+                this.users.add(new UserModel(
                         json.getInt("id"),
                         json.getString("username"),
                         json.getString("email"),

@@ -20,13 +20,13 @@ public class CommentDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String stm = "CREATE TABLE " + TABLE + " (" + ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + POST_ID + " INTEGER, " + NAME + " TEXT, " + EMAIL + " TEXT, " + BODY + " TEXT, FOREIGN KEY(" + POST_ID + ") REFERENCES posts(" + ID + "));";
+        String stm = "CREATE TABLE " + this.TABLE + " (" + this.ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + this.POST_ID + " INTEGER, " + this.NAME + " TEXT, " + this.EMAIL + " TEXT, " + this.BODY + " TEXT, FOREIGN KEY(" + this.POST_ID + ") REFERENCES posts(" + this.ID + "));";
         sqLiteDatabase.execSQL(stm);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + this.TABLE);
         onCreate(sqLiteDatabase);
     }
 }

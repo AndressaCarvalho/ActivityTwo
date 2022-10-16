@@ -19,16 +19,16 @@ public class HomePresenter implements HomePresenterContract.Presenter {
 
     @Override
     public void getPosts(int userId) {
-        homeView.onPostsResult(repositoryPost.getPostsByUserId(userId));
+        this.homeView.onPostsResult(this.repositoryPost.getPostsByUserId(userId));
     }
 
     @Override
     public void getAlbums(int userId) {
-        homeView.onAlbumsResult(repositoryAlbum.getAlbumsByUserId(userId));
+        this.homeView.onAlbumsResult(this.repositoryAlbum.getAlbumsByUserId(userId));
     }
 
     @Override
     public void getToDos(int userId) {
-        homeView.onToDosResult(repositoryToDo.getToDosByUserId(userId));
+        this.homeView.onToDosResult(this.repositoryToDo.getToDosByUserId(userId));
     }
 }

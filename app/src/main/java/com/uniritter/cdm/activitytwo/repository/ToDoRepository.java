@@ -29,7 +29,7 @@ public class ToDoRepository implements Listener<JSONArray>, Response.ErrorListen
     private ToDoRepository(Context context) {
         super();
         this.context = context;
-        toDos = new ArrayList<>();
+        this.toDos = new ArrayList<>();
 
         RequestQueue queue = Volley.newRequestQueue(context);
         JsonArrayRequest jaRequest = new JsonArrayRequest(Request.Method.GET,
@@ -48,7 +48,7 @@ public class ToDoRepository implements Listener<JSONArray>, Response.ErrorListen
     public List<IToDoModel> getToDosByUserId(int userId) {
         List<IToDoModel> toDosList = new ArrayList<>();
 
-        for(IToDoModel td : toDos) {
+        for(IToDoModel td : this.toDos) {
             if (userId == td.getToDoUserId()) {
                 toDosList.add(td);
             }
@@ -57,7 +57,7 @@ public class ToDoRepository implements Listener<JSONArray>, Response.ErrorListen
     }
 
     public List<IToDoModel> getAllToDos() {
-        return toDos;
+        return this.toDos;
     }
 
     @Override
@@ -65,7 +65,7 @@ public class ToDoRepository implements Listener<JSONArray>, Response.ErrorListen
         for (int i = 0; i < response.length(); i++) {
             try {
                 JSONObject json = response.getJSONObject(i);
-                toDos.add(new ToDoModel(
+                this.toDos.add(new ToDoModel(
                         json.getInt("id"),
                         json.getInt("userId"),
                         json.getString("title"),

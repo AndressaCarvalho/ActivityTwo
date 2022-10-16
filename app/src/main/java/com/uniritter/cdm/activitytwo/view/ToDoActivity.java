@@ -15,6 +15,7 @@ import com.uniritter.cdm.activitytwo.presenter.ToDoPresenterContract;
 import java.util.List;
 
 public class ToDoActivity extends AppCompatActivity implements ToDoPresenterContract.View {
+    private ToDoPresenterContract.Presenter toDoPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

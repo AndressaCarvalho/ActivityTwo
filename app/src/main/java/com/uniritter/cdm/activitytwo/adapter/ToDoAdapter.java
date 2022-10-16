@@ -30,7 +30,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        IToDoModel objToDo = data.get(position);
+        IToDoModel objToDo = this.data.get(position);
 
         ((TextView)((ToDoViewHolder) holder).itemView.findViewById(R.id.item)).setText(objToDo.getToDoTitle());
         ((CheckBox)((ToDoViewHolder) holder).itemView.findViewById(R.id.itemCheckbox)).setChecked(objToDo.getToDoCompleted());
@@ -38,7 +38,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return this.data.size();
     }
 }
 
@@ -47,6 +47,6 @@ class ToDoViewHolder extends RecyclerView.ViewHolder {
 
     public ToDoViewHolder(@NonNull View itemView) {
         super(itemView);
-        view = itemView;
+        this.view = itemView;
     }
 }

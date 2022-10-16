@@ -31,7 +31,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        IPhotoModel objPhoto = data.get(position);
+        IPhotoModel objPhoto = this.data.get(position);
 
         ImageView imageView = (ImageView)((PhotoViewHolder) holder).itemView.findViewById(R.id.item);
         Picasso.get()
@@ -44,7 +44,7 @@ public class PhotoAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return this.data.size();
     }
 }
 
@@ -53,6 +53,6 @@ class PhotoViewHolder extends RecyclerView.ViewHolder {
 
     public PhotoViewHolder(@NonNull View itemView) {
         super(itemView);
-        view = itemView;
+        this.view = itemView;
     }
 }
