@@ -68,7 +68,7 @@ Application implemented with [JSONPlaceholder](https://jsonplaceholder.typicode.
 
 ## Application demo
 <h3 align="center">
-    <a href="#">🔗 YouTube</a>
+    <a href="https://youtube.com/playlist?list=PLgTjChSSX8C_OI97MWIUsQ08CM-1Ujb2O">🔗 YouTube</a>
 </h3>
 
 ---
