@@ -1,5 +1,5 @@
 <h1 align="center">
-    Activity 2 - User Application
+    Activity 2 and Activity 3 - User Application
 </h1>
 
 ## Project description
